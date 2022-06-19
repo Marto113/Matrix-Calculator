@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-void swap(int *a, int* b) {
-    int c = *a;
+void swap(float *a, float* b) {
+    float c = *a;
     *a = *b;
     *b = c;
 }
@@ -11,7 +11,7 @@ void swap(int *a, int* b) {
 typedef struct {
     int rows;
     int columns;
-    int **elements;
+    float **elements;
     char *alias;
 }matrix_t;
 
@@ -24,10 +24,10 @@ matrix_t *matrix_init(int rows, int columns, char *name) {
     new_matrix->alias = malloc(strlen(name));
     strcpy(new_matrix->alias, name);
 
-    new_matrix->elements = malloc(sizeof(int *) * rows);
+    new_matrix->elements = malloc(sizeof(float *) * rows);
 
     for (int i = 0; i < new_matrix->rows; i++) 
-        new_matrix->elements[i] = malloc(sizeof(int) * columns);
+        new_matrix->elements[i] = malloc(sizeof(float) * columns);
 
     return new_matrix;
 }
@@ -37,10 +37,10 @@ void matrix_copy(matrix_t *dest, matrix_t *src) {
     dest->rows = src->rows;
     dest->columns = src->columns;
 
-    dest->elements = realloc(dest->elements, sizeof(int *) * src->rows);
+    dest->elements = realloc(dest->elements, sizeof(float *) * src->rows);
 
     for (int i = 0; i < dest->rows; i++) 
-        dest->elements[i] = malloc(sizeof(int) * dest->columns);
+        dest->elements[i] = malloc(sizeof(float) * dest->columns);
 
     for (int i = 0; i < dest->rows; i++)
         for (int j = 0; j < dest->columns; j++) 
@@ -69,4 +69,12 @@ void matrix_transpose(matrix_t *matrix) {
     if (matrix->rows == matrix->columns)
         transpose_symetrical(matrix);
     else transpose_unsymetrical(matrix);
+}
+
+void print_matrix(matrix_t *matrix) {
+    for (int i = 0; i < matrix->rows; i++) {
+        for (int j = 0; j < matrix->columns; j++)
+            printf("%.2f ", matrix->elements[i][j]);
+        printf("\n");
+    }
 }

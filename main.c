@@ -6,7 +6,7 @@
 int main() {
     int count = 1;
 
-    matrix_t *matrix = matrix_init(3, 4, "matrix1.txt");
+    matrix_t *matrix = matrix_init(3, 4, "matrix3");
 
     for(int i = 0; i < matrix->rows; i++){
         for(int j = 0; j < matrix->columns; j++){
@@ -17,6 +17,8 @@ int main() {
     matrix_transpose(matrix);
 
     write_matrix(matrix);
+
+    read_matrix(matrix);
 
     return 0;
 }
