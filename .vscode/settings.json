@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "matrix.h": "c"
+        "matrix.h": "c",
+        "string.h": "c"
     }
 }
