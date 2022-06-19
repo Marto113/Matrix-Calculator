@@ -2,3 +2,5 @@
 *.out
 *.bin
 a
+exp
+*.txt
