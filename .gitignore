@@ -1,7 +1,7 @@
 *.exe
 *.out
 *.bin
-matrix1
 a
 exp
 *.txt
+.vscode
