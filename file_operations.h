@@ -2,23 +2,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-void write_matrix(matrix_t *matrix){ 
+void write_matrix(matrix_t matrix){ 
     FILE *file;
 
-    char *file_name = calloc(strlen(matrix->alias) + 5, sizeof(char));
-    strcpy(file_name, matrix->alias);
+    char *file_name = calloc(strlen(matrix.alias) + 5, sizeof(char));
+    strcpy(file_name, matrix.alias);
     strcat(file_name, ".txt");
 
     file = fopen(file_name, "w");
 
     free(file_name);
 
-    int row = matrix->rows;
-    int col = matrix->columns;
+    int row = matrix.rows;
+    int col = matrix.columns;
+    fprintf(file, "%d %d", row, col);
+    fprintf(file, "\n");
 
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
-            fprintf(file, "%.2f", matrix->elements[i][j]);
+            fprintf(file, "%.2f", matrix.elements[i][j]);
             fprintf(file, " ");
         }
         fprintf(file, "\n");
@@ -27,11 +29,11 @@ void write_matrix(matrix_t *matrix){
     fclose(file);
 }
 
-void read_matrix(matrix_t *matrix){
+void read_matrix(char *name){
     FILE *file;
 
-    char *file_name = calloc(strlen(matrix->alias) + 5, sizeof(char));
-    strcpy(file_name, matrix->alias);
+    char *file_name = calloc(strlen(name) + 5, sizeof(char));
+    strcpy(file_name, name);
     strcat(file_name, ".txt");
 
     puts(file_name);
@@ -40,10 +42,14 @@ void read_matrix(matrix_t *matrix){
 
     free(file_name);
 
-    for(int i = 0; i < matrix->rows; i++){
-        for(int j = 0; j < matrix->columns; j++){
-            fscanf(file, "%f", &matrix->elements[i][j]);
-            printf("%.2f ", matrix->elements[i][j]);
+    int row, col;
+    fscanf(file, "%d %d", &row, &col);
+    matrix_t matrix = matrix_init(row, col, name);
+
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            fscanf(file, "%f", &matrix.elements[i][j]);
+            printf("%.2f ", matrix.elements[i][j]);
         }
         printf("\n");
     }
@@ -62,12 +68,14 @@ void console_matrix(char *name){
 
     free(file_name);
 
-    int rows, columns;
-    scanf("%d %d", &rows, &columns);
-    matrix_t matrix = matrix_init(rows, columns, name);
-
-    for(int i = 0; i < matrix.rows; i++){
-        for(int j = 0; j < matrix.columns; j++){
+    int row, col;
+    scanf("%d %d", &row, &col);
+    matrix_t matrix = matrix_init(row, col, name);
+    fprintf(file, "%d %d", row, col);
+    fprintf(file, "\n");
+    
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
             scanf("%f", &matrix.elements[i][j]);
             fprintf(file, "%.2f", matrix.elements[i][j]);
             fprintf(file, " ");
@@ -77,4 +85,3 @@ void console_matrix(char *name){
 
     fclose(file);
 }
-
