@@ -29,7 +29,7 @@ void write_matrix(matrix_t matrix){
     fclose(file);
 }
 
-void read_matrix(char *name){
+matrix_t read_matrix(char *name){
     FILE *file;
 
     char *file_name = calloc(strlen(name) + 5, sizeof(char));
@@ -55,6 +55,8 @@ void read_matrix(char *name){
     }
 
     fclose(file);
+
+    return matrix;
 }
 
 void console_matrix(char *name){
@@ -85,3 +87,4 @@ void console_matrix(char *name){
 
     fclose(file);
 }
+
