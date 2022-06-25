@@ -6,7 +6,7 @@
 int main() {
     int count = 1;
 
-    matrix_t matrix = matrix_init(3, 4, "matrix3");
+    matrix_t matrix = matrix_init(3, 4, "matrix1");
 
     for(int i = 0; i < matrix.rows; i++){
         for(int j = 0; j < matrix.columns; j++){
@@ -20,9 +20,9 @@ int main() {
 
     print_matrix(&matrix);
 
-    write_matrix(&matrix);
+    encrypt(matrix, 58585858);
 
-    read_matrix(&matrix);
+    decrypt(matrix.alias);
 
     return 0;
 }
