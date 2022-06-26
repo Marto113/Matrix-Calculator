@@ -51,7 +51,9 @@ float create_matrix_3x3(int abcd, int rows_start, int columns_start, float** mat
             new_matrix[i][j] = matrix[mod(rows_start, i)][mod(columns_start, j)];
         }
     }
-    return abcd * matrix_3x3(new_matrix);
+    int return_determinant = abcd * matrix_3x3(new_matrix);
+    free(new_matrix);
+    return return_determinant;
 }
 
 float determinant_matrix(matrix_t *m){
@@ -69,4 +71,3 @@ float determinant_matrix(matrix_t *m){
         return create_matrix_3x3(m->elements[0][0], 1, 1, m->elements) - create_matrix_3x3(m->elements[0][1], 1, 2, m->elements) + create_matrix_3x3(m->elements[0][2], 1, 3, m->elements) - create_matrix_3x3(m->elements[0][3], 1, 0, m->elements);
     }
 }
-
