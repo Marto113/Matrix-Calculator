@@ -63,7 +63,7 @@ float determinant_matrix(int rows, int columns, float matrix[rows][columns]){
         return matrix_3x3(matrix);
     }
     if(rows == 4){
-        return create_matrix(matrix[0][0], 1, 1, matrix) - create_matrix(matrix[0][1], 1, 2, matrix) + create_matrix(matrix[0][2], 1, 3, matrix) - create_matrix(matrix[0][3], 1, 0, matrix);
+        return create_matrix_3x3(matrix[0][0], 1, 1, matrix) - create_matrix_3x3(matrix[0][1], 1, 2, matrix) + create_matrix_3x3(matrix[0][2], 1, 3, matrix) - create_matrix_3x3(matrix[0][3], 1, 0, matrix);
     }
 }
 
