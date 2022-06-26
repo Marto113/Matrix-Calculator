@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 void matrix_scalar_multiply(int rows, int columns, float matrix[rows][columns], float scalar, float new_matrix[rows][columns]){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < columns; j++){
@@ -73,16 +71,4 @@ float determinant_matrix(int rows, int columns, float matrix[rows][columns]){
     if(rows == 4){
         return create_matrix(matrix[0][0], 1, 1, matrix) - create_matrix(matrix[0][1], 1, 2, matrix) + create_matrix(matrix[0][2], 1, 3, matrix) - create_matrix(matrix[0][3], 1, 0, matrix);
     }
-}
-int main()
-{
-    float matrix[4][4] = {
-        {1, 6, 2, 3},
-        {7, 9, 1, 4},
-        {4, 1, 1, 4},
-        {7, 2, 1, 1}
-    };
-    printf("%f\n", determinant_matrix(3, 4, matrix));
-    
-    return 0;
 }
