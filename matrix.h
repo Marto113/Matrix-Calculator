@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 void swap(float *a, float* b) {
     float c = *a;
@@ -133,6 +134,7 @@ void matrix_cofactor(matrix_t *matrix) {
                 matrix->elements[i][j] *= -1;
 }
 
+/*
 void matrix_inverse(matrix_t *matrix) {
     if (matrix->columns != matrix->rows) {
         printf("Matrix must be square to have an inverse!\n");
@@ -153,15 +155,29 @@ void matrix_inverse(matrix_t *matrix) {
 
     matrix_divide_scalar(matrix, determinant);
 }
+*/
+
+float find_max(matrix_t matrix) {
+    float max = matrix.elements[0][0]; 
+
+    for (int i = 0; i < matrix.rows; i++)
+        for (int j = 0; j < matrix.columns; j++)
+            if (max < matrix.elements[i][j])
+                max = matrix.elements[i][j];
+
+    return (int) max;        
+}
 
 void print_matrix(matrix_t matrix) {
-    puts(matrix.alias);
-
-    printf("%d %d\n", matrix.rows, matrix.columns);
+    int max_num = (int) log10(find_max(matrix)) + 1;
 
     for (int i = 0; i < matrix.rows; i++) {
-        for (int j = 0; j < matrix.columns; j++)
-            printf("%.2f ", matrix.elements[i][j]);
+        for (int j = 0; j < matrix.columns; j++) {
+            for (int k = (int) log10(matrix.elements[i][j] + 0.000001); k < max_num; k++) {
+                printf(" ");
+            }
+            printf("%.2f", matrix.elements[i][j]);
+        }
         printf("\n");
     }
 }
