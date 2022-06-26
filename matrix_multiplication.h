@@ -1,31 +1,32 @@
 #include <stdio.h>
 
-void matrix_scalar_multiply(int rows, int columns, float matrix[rows][columns], float scalar, float new_matrix[rows][columns]){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < columns; j++){
-            new_matrix[i][j] = scalar * matrix[i][j];
+void matrix_scalar_multiply(matrix_t* m, float scalar){
+    for(int i = 0; i < m->rows; i++){
+        for(int j = 0; j < m->columns; j++){
+            m->elements[i][j] *= scalar;
         }
     }
 }
 
-void matrix_matrix_multiply(int rows1, int columns1, float matrix1[rows1][columns1], int rows2, int columns2, float matrix2[rows2][columns2], float new_matrix[rows1][columns2]){
-    if(columns1 != rows2){
+void matrix_matrix_multiply(matrix_t* m1, matrix_t* m2){
+    if(m1->columns != m2->rows){
         return;
     }
-    
-    for(int i = 0; i < rows1; ++i) {
-        for(int j = 0; j < columns2; ++j) {
-            new_matrix[i][j] = 0;
+    matrix_t new_matrix = matrix_init(m1->rows, m2->columns, m1->alias);
+    for(int i = 0; i < m1->rows; ++i) {
+        for(int j = 0; j < m2->columns; ++j) {
+            new_matrix.elements[i][j] = 0;
         }
     }
     
-    for(int i = 0; i < rows1; i++){
-        for(int j = 0; j < columns2; j++){
-            for(int k = 0; k < columns1; k++){
-                new_matrix[i][j] += matrix1[i][k] * matrix2[k][j];
+    for(int i = 0; i < m1->rows; i++){
+        for(int j = 0; j < m2->columns; j++){
+            for(int k = 0; k < m1->columns; k++){
+                new_matrix.elements[i][j] += m1->elements[i][k] * m2->elements[k][j];
             }
         }
     }
+    matrix_shallowcopy(m1, &new_matrix);
 }
 
 float matrix_2x2(int abc, int rows_start, int columns_start, int rows_end, int columns_end, float matrix[3][3]){
@@ -40,7 +41,7 @@ int mod(int number, int plus){
     return (number + plus) % 4;
 }
 
-float create_matrix(int abcd, int rows_start, int columns_start, float matrix[4][4]){
+float create_matrix_3x3(int abcd, int rows_start, int columns_start, float matrix[4][4]){
     float new_matrix[3][3];
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
@@ -65,3 +66,4 @@ float determinant_matrix(int rows, int columns, float matrix[rows][columns]){
         return create_matrix(matrix[0][0], 1, 1, matrix) - create_matrix(matrix[0][1], 1, 2, matrix) + create_matrix(matrix[0][2], 1, 3, matrix) - create_matrix(matrix[0][3], 1, 0, matrix);
     }
 }
+
