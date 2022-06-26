@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void matrix_scalar_multiply(int rows, int columns, float matrix[rows][columns], float scalar, float new_matrix[rows][columns]){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < columns; j++){
