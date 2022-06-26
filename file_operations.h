@@ -48,18 +48,11 @@ void encrypt(matrix_t matrix, int key){
 matrix_t decrypt(char *name){
     FILE *file;
 
-    char *file_name = calloc(strlen(name) + 5, sizeof(char));
-    strcpy(file_name, name);
-    strcat(file_name, ".txt");
-
-    puts(file_name);
-
-    file = fopen(file_name, "r");
-
-    free(file_name);
+    file = fopen(name, "r");
 
     int row, col;
     fscanf(file, "%d %d", &row, &col);
+    //name[strlen(name) - 3] = '\0';
     matrix_t matrix = matrix_init(row, col, name);
 
     int key;
