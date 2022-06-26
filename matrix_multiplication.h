@@ -28,15 +28,6 @@ void matrix_matrix_multiply(int rows1, int columns1, float matrix1[rows1][column
     }
 }
 
-void print_matrix(int rows, int columns, float matrix[rows][columns]){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < columns; j++){
-            printf("%0.2f ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 float matrix_2x2(int abc, int rows_start, int columns_start, int rows_end, int columns_end, float matrix[3][3]){
     return abc * (matrix[rows_start][columns_start] * matrix[rows_end][columns_end] - matrix[rows_start][columns_end] * matrix[rows_end][columns_start]);
 }
