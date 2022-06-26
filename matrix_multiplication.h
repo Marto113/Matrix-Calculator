@@ -51,19 +51,19 @@ float create_matrix_3x3(int abcd, int rows_start, int columns_start, float matri
     return abcd * matrix_3x3(new_matrix);
 }
 
-float determinant_matrix(int rows, int columns, float matrix[rows][columns]){
-    if(rows != columns){
+float determinant_matrix(matrix_t *m){
+    if(m->rows != m->columns){
         printf("Error\n");
         return 0;
     }
-    if(rows == 2){
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    if(m->rows == 2){
+        return m->elements[0][0] * m->elements[1][1] - m->elements[0][1] * m->elements[1][0];
     }
-    if(rows == 3){
-        return matrix_3x3(matrix);
+    if(m->rows == 3){
+        return matrix_3x3(m->elements);
     }
-    if(rows == 4){
-        return create_matrix_3x3(matrix[0][0], 1, 1, matrix) - create_matrix_3x3(matrix[0][1], 1, 2, matrix) + create_matrix_3x3(matrix[0][2], 1, 3, matrix) - create_matrix_3x3(matrix[0][3], 1, 0, matrix);
+    if(m->rows == 4){
+        return create_matrix_3x3(m->elements[0][0], 1, 1, m->elements) - create_matrix_3x3(m->elements[0][1], 1, 2, m->elements) + create_matrix_3x3(m->elements[0][2], 1, 3, m->elements) - create_matrix_3x3(m->elements[0][3], 1, 0, m->elements);
     }
 }
 
