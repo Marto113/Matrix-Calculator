@@ -29,11 +29,11 @@ void matrix_matrix_multiply(matrix_t* m1, matrix_t* m2){
     matrix_shallowcopy(m1, &new_matrix);
 }
 
-float matrix_2x2(int abc, int rows_start, int columns_start, int rows_end, int columns_end, float matrix[3][3]){
+float matrix_2x2(int abc, int rows_start, int columns_start, int rows_end, int columns_end, float **matrix){
     return abc * (matrix[rows_start][columns_start] * matrix[rows_end][columns_end] - matrix[rows_start][columns_end] * matrix[rows_end][columns_start]);
 }
 
-float matrix_3x3(float matrix[3][3]){
+float matrix_3x3(float **matrix){
     return matrix_2x2(matrix[0][0], 1, 1, 2, 2, matrix) + matrix_2x2(matrix[0][1], 1, 2, 2, 0, matrix) + matrix_2x2(matrix[0][2], 1, 0, 2, 1, matrix);
 }
 
@@ -41,8 +41,11 @@ int mod(int number, int plus){
     return (number + plus) % 4;
 }
 
-float create_matrix_3x3(int abcd, int rows_start, int columns_start, float matrix[4][4]){
-    float new_matrix[3][3];
+float create_matrix_3x3(int abcd, int rows_start, int columns_start, float** matrix){
+    float **new_matrix = malloc(sizeof(int) * 3);
+    for(int i = 0; i < 3; i++){
+        new_matrix[i] = malloc(sizeof(float));
+    }
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             new_matrix[i][j] = matrix[mod(rows_start, i)][mod(columns_start, j)];
