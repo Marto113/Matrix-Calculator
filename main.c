@@ -1,28 +1,34 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "matrix.h"
 #include "file_operations.h"
+#include "hash.h"
+
+void show_options() {
+    printf("[0] - Exit\n"
+           "[1] - Read from file\n"
+           "[2] - Make matrix from console\n"
+           "[3] - Multiply matrix by scalar\n"
+           "[4] - Multiply matrix by matrix\n"
+           "[5] - Divide matrix by scalar\n"
+           "[6] - Find determinant of matrix\n"
+           "[7] - Transpose matrix\n"
+           "[8] - Inverse matrix\n"
+           "[9] - Print matrix\n");
+}
 
 int main() {
-    int count = 1;
+    linked_list_t **hash_table = calloc(HASH_TABLE_LEN, sizeof(matrix_t *));
+    char used_strings[MAX_MATRIXES][MAX_LEN];
 
-    matrix_t matrix = matrix_init(3, 4, "matrix1");
+    int c = 1;
 
-    for(int i = 0; i < matrix.rows; i++){
-        for(int j = 0; j < matrix.columns; j++){
-            matrix.elements[i][j] = count++;
+    while (c) {
+        show_options();
+
+        scanf("%d", &c);
+
+        switch (c) {
+
         }
     }
-
-    print_matrix(&matrix);
-
-    matrix_transpose(&matrix);
-
-    print_matrix(&matrix);
-
-    encrypt(matrix, 58585858);
-
-    decrypt(matrix.alias);
-
     return 0;
 }

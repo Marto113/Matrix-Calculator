@@ -69,7 +69,7 @@ void matrix_shallowcopy(matrix_t *dest, matrix_t *src) {
 
 void transpose_symetrical(matrix_t *matrix) {
     for (int i = 0; i < matrix->rows; i++) 
-        for (int j = i; j < matrix->columns; j++)
+        for (int j = i + 1; j < matrix->columns; j++)
             swap(&matrix->elements[i][j], &matrix->elements[j][i]);
 }
 
@@ -84,19 +84,84 @@ void transpose_unsymetrical(matrix_t *matrix) {
 }
 
 void matrix_transpose(matrix_t *matrix) {
-    if (matrix->rows == matrix->columns)
+    if (matrix->rows == matrix->columns) {
         transpose_symetrical(matrix);
-    else transpose_unsymetrical(matrix);
+    } else transpose_unsymetrical(matrix);
 }
 
-void print_matrix(matrix_t *matrix) {
-    puts(matrix->alias);
+void matrix_divide_scalar(matrix_t *matrix, float scalar) {
+    //vikni matrix multiply s 1/scalar kogato kamen si premesti funckiite tuka;
+    for (int i = 0; i < matrix->rows; i++)
+        for (int j = 0; j < matrix->columns; j++) 
+            matrix->elements[i][j] /= scalar;
+}
 
-    printf("%d %d\n", matrix->rows, matrix->columns);
+//float find_2nd_determinant(float a, float b, float c, float d) {
+//    return (a * d) - (b * c);
+//}
 
-    for (int i = 0; i < matrix->rows; i++) {
-        for (int j = 0; j < matrix->columns; j++)
-            printf("%.2f ", matrix->elements[i][j]);
+//float find_3rd_determinant() {
+//
+//}
+
+//float find_nth_determinant(int rows, int columns, float arr[rows][columns]) {
+//    float determinant = 0;
+//
+//    if (rows == 2) {
+//        return find_2nd_determinant();
+//    }
+//
+//    for (int i = 0; i < columns; i++) {
+//        if (i % 2 == 0) {
+//           determinant += arr[0][i] * find_nth_determinant();
+//        } else determinant -= arr[0][i] * find_nth_determinant();
+//    }
+//}
+//
+//float find_matrix_determinant(matrix_t matrix) {
+//    return find_nth_determinant(matrix.rows, matrix.columns, matrix.elements);
+//}
+
+void matrix_of_minors(matrix_t *matrix) {
+
+}
+
+void matrix_cofactor(matrix_t *matrix) {
+    for (int i = 0; i < matrix->rows; i++) 
+        for (int j = 0; j < matrix->columns; j++) 
+            if ((i * matrix->columns + j) % 2 != 0) 
+                matrix->elements[i][j] *= -1;
+}
+
+void matrix_inverse(matrix_t *matrix) {
+    if (matrix->columns != matrix->rows) {
+        printf("Matrix must be square to have an inverse!\n");
+        return ;
+    }
+
+    float determinant = find_matrix_determinant(*matrix);
+
+    if (determinant == 0) {
+        printf("Determinant is 0 therefore matrix has no inverse.\n");
+        return ;
+    }
+
+    matrix_of_minors(matrix);
+
+    matrix_cofactor(matrix);
+    matrix_transpose(matrix);
+
+    matrix_divide_scalar(matrix, determinant);
+}
+
+void print_matrix(matrix_t matrix) {
+    puts(matrix.alias);
+
+    printf("%d %d\n", matrix.rows, matrix.columns);
+
+    for (int i = 0; i < matrix.rows; i++) {
+        for (int j = 0; j < matrix.columns; j++)
+            printf("%.2f ", matrix.elements[i][j]);
         printf("\n");
     }
 }
