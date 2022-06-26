@@ -71,4 +71,3 @@ float determinant_matrix(matrix_t *m){
         return create_matrix_3x3(m->elements[0][0], 1, 1, m->elements) - create_matrix_3x3(m->elements[0][1], 1, 2, m->elements) + create_matrix_3x3(m->elements[0][2], 1, 3, m->elements) - create_matrix_3x3(m->elements[0][3], 1, 0, m->elements);
     }
 }
-
